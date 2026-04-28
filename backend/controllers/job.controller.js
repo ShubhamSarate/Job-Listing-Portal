@@ -78,8 +78,8 @@ export const getJobById = async (req,res) => {
         };
 
         return res.status(200).json({
-            job,
-            success: true
+            success: true,
+            job
         })
     } catch (error) {
         console.log(error);
