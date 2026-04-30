@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Navbar from './components/shared/Navbar';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import Home from './components/home/Home';
-import { Toaster } from "sonner";
 import Jobs from './components/jobs/jobs';
 import Browse from './components/browse/Browse';
 import Profile from './components/profile/Profile';
 import JobDescription from './components/jobs/JobDescription';
+import Companies from './components/admin/Companies';
+import CompanyCreate from './components/admin/CompanyCreate';
+import CompanySetUp from './components/admin/CompanySetUp';
 
 const appRouter = createBrowserRouter([
     {
@@ -37,6 +38,19 @@ const appRouter = createBrowserRouter([
     {
         path: '/profile',
         element: <Profile/>
+    },
+    // Admin
+    {
+        path: '/admin/companies',
+        element: <Companies/>
+    },
+    {
+        path: 'admin/companies/create',
+        element: <CompanyCreate/>
+    },
+    {
+        path: 'admin/companies/:id',
+        element: <CompanySetUp/>
     }
 ])
 

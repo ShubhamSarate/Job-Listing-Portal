@@ -21,5 +21,5 @@ const useGetAlljobs = () => {
     },[])
 }
 
-export default useGetAlljobs
+export default useGetAlljobs;
   
