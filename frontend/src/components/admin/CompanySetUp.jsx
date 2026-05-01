@@ -142,7 +142,7 @@ const CompanySetUp = () => {
             type="submit"
             className="bg-black text-white px-2 py-1 rounded-md mr-2 hover:bg-'black' w-full mt-8"
           >
-            Update
+            {loading ? "Please Wait..." : "Update"}
           </Button>
         </form>
       </div>
