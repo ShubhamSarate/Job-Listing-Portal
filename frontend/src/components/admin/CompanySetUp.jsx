@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import axios from "axios";
@@ -9,8 +9,11 @@ import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import useGetCompanyById from "@/hooks/useGetCompanyById";
 
 const CompanySetUp = () => {
+  const params = useParams();
+  useGetCompanyById(params.id);
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -20,7 +23,6 @@ const CompanySetUp = () => {
   });
   const { singleCompany } = useSelector(store => store.company);
   const [loading, setLoading] = useState(false);
-  const params = useParams();
   const navigate = useNavigate();
 
   const changeEventHandler = (e) => {
@@ -138,12 +140,9 @@ const CompanySetUp = () => {
               />
             </div>
           </div>
-          <Button
-            type="submit"
-            className="bg-black text-white px-2 py-1 rounded-md mr-2 hover:bg-'black' w-full mt-8"
-          >
-            {loading ? "Please Wait..." : "Update"}
-          </Button>
+          {
+            loading ? <Button className="w-full my-4 hover:bg-'black' bg-black text-white px-2 py-1 rounded-md mr-2"><Loader2 className="bg-black text-white px-2 py-1 rounded-md mr-2 hover:bg-'black' mr-2 h-4 w-4 animate-spin"/>Please Wait</Button> : <Button type="submit" className='w-full my-4'>Update</Button>
+          }
         </form>
       </div>
     </div>
