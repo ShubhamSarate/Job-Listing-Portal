@@ -1,2 +1,2 @@
-11:36:37
-className="bg-black text-white px-2 py-1 rounded-md mr-2 hover:bg-'black'"
+12:26:55
+className="w-full my-4 bg-black text-white px-2 py-1 rounded-md mr-2 hover:bg-'black'"

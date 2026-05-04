@@ -68,9 +68,9 @@ const CompaniesTable = () => {
                         <PopoverTrigger>
                           <MoreHorizontal />
                         </PopoverTrigger>
-                        <PopoverContent className="w-32">
+                        <PopoverContent className="w-32 bg-white">
                           <div onClick={()=>navigate(`/admin/companies/${company._id}`)} className="flex items-center gap-2 w-fit cursor-pointer">
-                            <Edit2 className="=w-4"/>
+                            <Edit2 className="w-4"/>
                             <span>Edit</span>
                           </div>
                         </PopoverContent>
