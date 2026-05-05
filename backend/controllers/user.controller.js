@@ -8,14 +8,23 @@ import cloudinary from "../utils/cloudinary.js";
 export const register = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, role } = req.body;
+
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res.status(400).json({
         message: "Something is missing",
         success: false,
       });
-    };
-    const file = req.file;
-    const fileUri = getDataUri(file);
+    }
+
+    // ✅ check FIRST
+    if (!req.file) {
+      return res.status(400).json({
+        message: "Profile image is required",
+        success: false,
+      });
+    }
+
+    const fileUri = getDataUri(req.file);
     const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
     let user = await User.findOne({ email });
@@ -25,6 +34,7 @@ export const register = async (req, res) => {
         success: false,
       });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await User.create({
@@ -35,13 +45,14 @@ export const register = async (req, res) => {
       role,
       profile: {
         profilePhoto: cloudResponse.secure_url,
-      }
+      },
     });
 
     return res.status(200).json({
       message: "Account Created Successfully",
       success: true,
     });
+
   } catch (error) {
     console.log(error);
   }
