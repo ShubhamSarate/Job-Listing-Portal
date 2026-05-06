@@ -138,10 +138,11 @@ const CompanySetUp = () => {
                 accept="image/*"
                 onChange={changeFileHandler}
               />
+              <p className="text-sm text-red-500">*Required</p>
             </div>
           </div>
           {
-            loading ? <Button className="w-full my-4 hover:bg-'black' bg-black text-white px-2 py-1 rounded-md mr-2"><Loader2 className="bg-black text-white px-2 py-1 rounded-md mr-2 hover:bg-'black' mr-2 h-4 w-4 animate-spin"/>Please Wait</Button> : <Button type="submit" className="w-full my-4 bg-black text-white px-2 py-1 rounded-md mr-2 hover:bg-'black'">Update</Button>
+            loading ? <Button type="submit" disabled className="w-full my-4 hover:bg-black bg-black text-white px-2 py-1 rounded-md mr-2"><Loader2 className="bg-black text-white px-2 py-1 rounded-md mr-2 hover:bg-'black' mr-2 h-4 w-4 animate-spin"/>Please Wait</Button> : <Button type="submit" className="w-full my-4 bg-black text-white px-2 py-1 rounded-md mr-2 hover:bg-'black'">Update</Button>
           }
         </form>
       </div>

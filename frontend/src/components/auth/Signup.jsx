@@ -126,7 +126,7 @@ const Signup = () => {
                 </div>
               </RadioGroup>
               <div className="flex items-center gap-2">
-                <Label>Profile</Label>
+                <Label className="ml-5">Profile</Label>
                 <Input
                     accept="image/*" type="file" className="cursor-pointer" name="file" onChange={changeFileHandler}/>
               </div>

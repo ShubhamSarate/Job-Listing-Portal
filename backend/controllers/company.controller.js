@@ -78,33 +78,55 @@ export const getCompanyById = async (req,res) => {
 }
 
 // Update company information
-export const updateCompany = async (req,res) => {
-    try {
-        const { name, description, website, location } = req.body;
-        const file = req.file;
+export const updateCompany = async (req, res) => {
+  try {
+    const { name, description, website, location } = req.body;
+    const file = req.file;
 
-        // cloudinary
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-        const logo = cloudResponse.secure_url;
+    let logo;
 
-        const updateData = { name, description, website, location, logo};
-
-        const company = await Company.findByIdAndUpdate(req.params.id, updateData, {new: true});
-
-        if(!company){
-            return res.status(404).json({
-                message: "Company Not Found",
-                success: false
-            });
-        };
-
-        return res.status(200).json({
-            message: "Updated Company Information",
-            updateData,
-            success: true
-        })
-    } catch (error) {
-        console.log(error);
+    // ✅ Only process file if it exists
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+        resource_type: "auto", // ✅ supports image + pdf
+      });
+      logo = cloudResponse.secure_url;
     }
-}
+    const updateData = {
+      name,
+      description,
+      website,
+      location,
+    };
+    if (logo) {
+      updateData.logo = logo;
+    }
+
+    const company = await Company.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    if (!company) {
+      return res.status(404).json({
+        message: "Company Not Found",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      message: "Updated Company Information",
+      company,
+      success: true,
+    });
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Server Error",
+      success: false,
+    });
+  }
+};

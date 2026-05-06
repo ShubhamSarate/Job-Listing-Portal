@@ -9,6 +9,7 @@ import JobDescription from "./components/jobs/JobDescription";
 import Companies from "./components/admin/Companies";
 import CompanyCreate from "./components/admin/CompanyCreate";
 import CompanySetUp from "./components/admin/CompanySetUp";
+import JobSetUp from "./components/admin/JobSetUp";
 import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from "./components/admin/PostJob";
 import Applicants from "./components/admin/Applicants";
@@ -45,39 +46,39 @@ const appRouter = createBrowserRouter([
   },
   // Admin
   {
-    path: "/admin",
-    element: <ProtectedRoute />,
-    children: [
-      {
-        path: "/admin/companies",
-        element: (
-          <ProtectedRoute>
-            <Companies />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "/admin/companies/create",
-        element: <CompanyCreate />,
-      },
-      {
-        path: "/admin/companies/:id",
-        element: <CompanySetUp />,
-      },
-      {
-        path: "/admin/jobs",
-        element: <AdminJobs />,
-      },
-      {
-        path: "/admin/jobs/create",
-        element: <PostJob />,
-      },
-      {
-        path: "/admin/jobs/:id/applicants",
-        element: <Applicants />,
-      },
-    ],
-  },
+  path: "/admin",
+  element: <ProtectedRoute />,
+  children: [
+    {
+      path: "companies",
+      element: <Companies />
+    },
+    {
+      path: "companies/create",
+      element: <CompanyCreate />,
+    },
+    {
+      path: "companies/:id",
+      element: <CompanySetUp />,
+    },
+    {
+      path: "job/:id",
+      element: <JobSetUp />,
+    },
+    {
+      path: "jobs",
+      element: <AdminJobs />,
+    },
+    {
+      path: "jobs/create",
+      element: <PostJob />,
+    },
+    {
+      path: "jobs/:id/applicants",
+      element: <Applicants />,
+    },
+  ],
+}
 ]);
 
 function App() {

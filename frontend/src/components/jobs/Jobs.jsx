@@ -5,6 +5,7 @@ import Job from "./Job";
 import { useDispatch, useSelector } from "react-redux";
 import useGetAlljobs from "@/hooks/useGetAlljobs";
 import { motion } from "framer-motion";
+import { setSearchedQuery } from "@/redux/jobSlice";
 
 // const jobsArray = [1, 2, 3, 4, 5, 6, 7, 8];
 const Jobs = () => {
@@ -27,6 +28,12 @@ const Jobs = () => {
       setFilterJobs(allJobs);
     }
   }, [allJobs, searchedQuery]);
+
+  useEffect(() => {
+    return ()=> {
+      dispatch(setSearchedQuery(""));
+    }
+  },[]);
 
   return (
     <div>

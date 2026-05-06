@@ -126,6 +126,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             <Input name="email" value={input.email} onChange={changeHandler} />
             <Input name="phoneNumber" value={input.phoneNumber} onChange={changeHandler} />
             <Input name="bio" value={input.bio} onChange={changeHandler} placeholder="Bio" />
+            <Label>(comma separated)</Label>
             <Input name="skills" value={input.skills} onChange={changeHandler} placeholder="Skills" />
 
             <Input type="file" accept="application/pdf" onChange={fileHandler} />

@@ -16,7 +16,6 @@ export const register = async (req, res) => {
       });
     }
 
-    // ✅ check FIRST
     if (!req.file) {
       return res.status(400).json({
         message: "Profile image is required",
@@ -56,7 +55,7 @@ export const register = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-};
+}
 
 // Login
 export const login = async (req, res) => {

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { setSingleJob } from "@/redux/jobSlice";
 import { APPLY_API_END_POINT, JOB_API_END_POINT } from "@/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 
 const JobDescription = () => {
   const params = useParams();
@@ -14,6 +15,7 @@ const JobDescription = () => {
   const dispatch = useDispatch();
   const { singleJob } = useSelector((store) => store.job);
   const { user } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
   const isInitiallyApplied =
     singleJob?.applications?.some(
       (application) => application.applicant === user?._id,
@@ -67,6 +69,12 @@ const JobDescription = () => {
     <div className="max-w-7xl mx-auto my-10">
       <div className="flex items-center justify-between">
         <div>
+          <div className="py-4">
+          <Button
+          type="button"
+          onClick={()=> navigate('/jobs')}
+          variant="outline"><ArrowLeft/>Back</Button>
+          </div>
           <h1 className="font-bold text-xl">{singleJob?.title}</h1>
           <div className="flex items-center gap-2 mt-4">
             <Badge className={"text-blue-700 font-bold"} variant="outline">

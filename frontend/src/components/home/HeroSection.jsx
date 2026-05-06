@@ -25,13 +25,13 @@ const HeroSection = () => {
           Search, Apply & <br /> Get Your{" "}
           <span className="text-[#6A38C2]">Dream Jobs</span>
         </h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, vitae repudiandae rem doloremque earum ad.</p>
+        <p>Search smart, apply fast, and get hired to your dream job-all in one seamless journey</p>
         <div className="flex w-[40%] shadow-lg border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto">
             <input 
                 onChange={(e) => setQuery(e.target.value)}
                 type="text"
                 placeholder="Find your dream jobs"
-                className="outline-none border-none w-full"/>
+                className="mx-3 outline-none border-none w-full"/>
                 <Button onClick={searchJobHandler} className="rounded-r-full bg-[#6A38C2] hover:bg-[#5b30a6]">
                     <Search className="h-5 w-5 text-[white]"/>
                 </Button>

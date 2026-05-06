@@ -34,7 +34,7 @@ const Profile = () => {
           <div className="flex items-center gap-4">
             <Avatar className="h-24 w-24">
               <AvatarImage
-                src="https://imgs.search.brave.com/vzTwqIj9dMe2gwibFPpaTl8-npWMJcyvJkOsYmMNbPM/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jb250/ZW50LW1hbmFnZW1l/bnQtZmlsZXMuY2Fu/dmEuY29tL2VlMGNl/NTA4LTdmODgtNDYy/MS05ZWU0LWQzZTNi/MTA1YjQ1MC9CTVdM/T0dPc21hbGwucG5n"
+                src={user?.profile?.profilePhoto}
                 alt="profile"
               ></AvatarImage>
             </Avatar>
