@@ -1,26 +1,32 @@
-import express from 'express';
+import express from "express";
 import {
   register,
   login,
   logout,
-  updateProfile
-} from '../controllers/user.controller.js';
+  updateProfile,
+  saveJob,
+  getSavedJobs,
+  verifyEmail
+} from "../controllers/user.controller.js";
 
-import isAuthenticated from '../middlewares/isAuthenticated.js';
-import { singleUpload } from '../middlewares/multer.js';
+import isAuthenticated from "../middlewares/isAuthenticated.js";
+import { singleUpload } from "../middlewares/multer.js";
 
 const router = express.Router();
 
-// Auth routes
-router.route("/register").post(singleUpload, register);
-router.route("/login").post(login);
-router.route("/logout").get(logout);
+// AUTH
+router.post("/register", singleUpload, register);
+router.post("/login", login);
+router.get("/logout", logout);
 
-// Profile update (FIXED)
-router.route("/profile/update").put(
-  isAuthenticated,
-  singleUpload,
-  updateProfile
-);
+// EMAIL VERIFY (NO AUTH REQUIRED)
+router.get("/verify-email/:token", verifyEmail);
+
+// JOBS (AUTH REQUIRED)
+router.get("/save/:id", isAuthenticated, saveJob);
+router.get("/saved", isAuthenticated, getSavedJobs);
+
+// PROFILE
+router.put("/profile/update", isAuthenticated, singleUpload, updateProfile);
 
 export default router;

@@ -10,10 +10,13 @@ const HeroSection = () => {
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const searchJobHandler = () => {
-    dispatch(setSearchedQuery(query));
-    navigate('/browse');
-  }
+  if (!query.trim()) return;
+
+  dispatch(setSearchedQuery([query]));
+  navigate('/browse');
+};
 
   return (
     <div className="text-center">
@@ -27,7 +30,8 @@ const HeroSection = () => {
         </h1>
         <p>Search smart, apply fast, and get hired to your dream job-all in one seamless journey</p>
         <div className="flex w-[40%] shadow-lg border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto">
-            <input 
+            <input
+                value={query} 
                 onChange={(e) => setQuery(e.target.value)}
                 type="text"
                 placeholder="Find your dream jobs"

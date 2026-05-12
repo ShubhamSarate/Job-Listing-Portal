@@ -28,10 +28,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     phoneNumber: "",
     bio: "",
     skills: "",
-    file: null,
+    file: null,          // Resume PDF
+    profilePhoto: null,  // Profile Image
   });
 
-  // sync redux → local state
+  // Sync Redux user data to local state
   useEffect(() => {
     if (user) {
       setInput({
@@ -41,6 +42,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         bio: user.profile?.bio || "",
         skills: user.profile?.skills?.join(", ") || "",
         file: null,
+        profilePhoto: null,
       });
     }
   }, [user]);
@@ -52,10 +54,19 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     }));
   };
 
+  // Resume file handler
   const fileHandler = (e) => {
     setInput((prev) => ({
       ...prev,
       file: e.target.files?.[0] || null,
+    }));
+  };
+
+  // Profile photo handler
+  const profilePhotoHandler = (e) => {
+    setInput((prev) => ({
+      ...prev,
+      profilePhoto: e.target.files?.[0] || null,
     }));
   };
 
@@ -71,27 +82,32 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       formData.append("phoneNumber", input.phoneNumber);
       formData.append("bio", input.bio);
 
-      //IMPORTANT: clean skills
+      // Clean skills
       formData.append(
         "skills",
-        input.skills.split(",").map((s) => s.trim()).join(",")
+        input.skills
+          .split(",")
+          .map((s) => s.trim())
+          .join(",")
       );
 
+      // Resume PDF
       if (input.file) {
         formData.append("file", input.file);
       }
 
-      console.log("SENDING REQUEST...");
+      // Profile Photo
+      if (input.profilePhoto) {
+        formData.append("profilePhoto", input.profilePhoto);
+      }
 
       const res = await axios.put(
         `${USER_API_END_POINT}/profile/update`,
         formData,
         {
-          withCredentials: true, // ONLY THIS IS NEEDED
+          withCredentials: true,
         }
       );
-
-      console.log("RESPONSE:", res.data);
 
       if (res.data.success) {
         dispatch(setUser(res.data.user));
@@ -100,7 +116,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error?.response?.data?.message || "Update failed");
+      toast.error(
+        error?.response?.data?.message || "Update failed"
+      );
     } finally {
       setLoading(false);
     }
@@ -115,25 +133,81 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         <DialogHeader>
           <DialogTitle>Update Profile</DialogTitle>
           <DialogDescription>
-    Update your personal details like name, bio, skills, and profile file.
-  </DialogDescription>
+            Update your personal details, profile photo,
+            skills, and resume.
+          </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={submitHandler}>
           <div className="grid gap-4 py-4">
+            {/* Full Name */}
+            <Input
+              name="fullname"
+              value={input.fullname}
+              onChange={changeHandler}
+              placeholder="Full Name"
+            />
 
-            <Input name="fullname" value={input.fullname} onChange={changeHandler} />
-            <Input name="email" value={input.email} onChange={changeHandler} />
-            <Input name="phoneNumber" value={input.phoneNumber} onChange={changeHandler} />
-            <Input name="bio" value={input.bio} onChange={changeHandler} placeholder="Bio" />
+            {/* Email */}
+            <Input
+              name="email"
+              value={input.email}
+              onChange={changeHandler}
+              placeholder="Email"
+            />
+
+            {/* Phone Number */}
+            <Input
+              name="phoneNumber"
+              value={input.phoneNumber}
+              onChange={changeHandler}
+              placeholder="Phone Number"
+            />
+
+            {/* Bio */}
+            <Input
+              name="bio"
+              value={input.bio}
+              onChange={changeHandler}
+              placeholder="Bio"
+            />
+
+            {/* Skills */}
             <Label>(comma separated)</Label>
-            <Input name="skills" value={input.skills} onChange={changeHandler} placeholder="Skills" />
+            <Input
+              name="skills"
+              value={input.skills}
+              onChange={changeHandler}
+              placeholder="Skills"
+            />
 
-            <Input type="file" accept="application/pdf" onChange={fileHandler} />
+            {/* Profile Photo Upload */}
+            <div className="space-y-2">
+              <Label>Profile Photo</Label>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={profilePhotoHandler}
+              />
+            </div>
+
+            {/* Resume Upload */}
+            <div className="space-y-2">
+              <Label>Resume (PDF)</Label>
+              <Input
+                type="file"
+                accept="application/pdf"
+                onChange={fileHandler}
+              />
+            </div>
           </div>
 
           <DialogFooter>
-            <Button type="submit" disabled={loading} className="w-full my-4 bg-[#6A38C2] hover:bg-[#5b30a6] text-white transition-colors">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full my-4 bg-[#6A38C2] hover:bg-[#5b30a6] text-white transition-colors"
+            >
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

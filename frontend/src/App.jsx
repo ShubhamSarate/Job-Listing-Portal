@@ -14,6 +14,8 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from "./components/admin/PostJob";
 import Applicants from "./components/admin/Applicants";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
+import SavedJobs from "./components/home/SavedJobs";
+import VerifyEmail from "./pages/VerifyEmail";
 
 const appRouter = createBrowserRouter([
   {
@@ -39,10 +41,17 @@ const appRouter = createBrowserRouter([
   {
     path: "/browse",
     element: <Browse />,
+  },{
+    path: "/saved",
+    element: <SavedJobs/>
   },
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path:"/verify-email/:token",
+    element: <VerifyEmail/>
   },
   // Admin
   {
