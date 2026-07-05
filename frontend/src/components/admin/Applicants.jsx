@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react'
 import Navbar from '../shared/Navbar'
 import ApplicantsTable from './ApplicantsTable'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { APPLY_API_END_POINT } from '@/utils/constant'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAllApplicants } from '@/redux/applicationSlice'
+import { Button } from '../ui/button'
+import { ArrowLeft } from 'lucide-react'
 
 const Applicants = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const {applicants} = useSelector(store => store.application);
     useEffect(() => {
@@ -28,6 +31,7 @@ const Applicants = () => {
     <div>
       <Navbar/>
       <div className='max-w-7xl mx-auto'>
+        <Button className="my-3 mx-3" variant="outline" onClick={()=>navigate('/admin/jobs')}><ArrowLeft/>Back</Button>
         <h1 className='font-bold text-xl my-5'>Applicants {applicants?.applications?.length}</h1>
         <ApplicantsTable/>
       </div>
